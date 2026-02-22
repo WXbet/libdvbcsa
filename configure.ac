@@ -73,7 +73,7 @@ elif test "$enable_neon" = "yes" ; then
      case $host_cpu in
          arm64*|aarch64*) ;;
          arm*)
-             case "$GCC_CFLAGS" in
+             case "$CC $GCC_CFLAGS" in
                  *-mfpu=*neon*) ;;
                  *) GCC_CFLAGS="$GCC_CFLAGS -mfpu=neon" ;;
              esac
