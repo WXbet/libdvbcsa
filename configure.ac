@@ -72,7 +72,12 @@ elif test "$enable_neon" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_NEON, 1, Using NEON bitslice.)
      case $host_cpu in
          arm64*|aarch64*) ;;
-         arm*) GCC_CFLAGS="$GCC_CFLAGS -mfpu=neon" ;;
+         arm*)
+             case "$GCC_CFLAGS" in
+                 *-mfpu=*neon*) ;;
+                 *) GCC_CFLAGS="$GCC_CFLAGS -mfpu=neon" ;;
+             esac
+             ;;
      esac
 
 elif test "$enable_uint32" = "yes" ; then
