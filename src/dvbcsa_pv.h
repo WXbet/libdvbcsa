@@ -141,25 +141,7 @@ dvbcsa_load_le32(const uint8_t *p)
 #endif
 }
 
-DVBCSA_INLINE static inline uint64_t
-dvbcsa_load_le64(const uint8_t *p)
-{
-#if defined(DVBCSA_ENDIAN_LITTLE)
-  uint64_t i;
-  memcpy(&i, p, 8);
-  return i;
-#else
-  return (uint64_t)( ((uint64_t)p[7] << 56) |
-                     ((uint64_t)p[6] << 48) |
-                     ((uint64_t)p[5] << 40) |
-                     ((uint64_t)p[4] << 32) |
-                     ((uint64_t)p[3] << 24) |
-                     ((uint64_t)p[2] << 16) |
-                     ((uint64_t)p[1] << 8 ) |
-                      (uint64_t)p[0]
-                     );
-#endif
-}
+#define dvbcsa_load_le64(p)    dvbcsa_load_le64_ecm(0, p)
 
 DVBCSA_INLINE static inline uint64_t
 dvbcsa_load_le64_ecm(const unsigned char ecm, const uint8_t *p)

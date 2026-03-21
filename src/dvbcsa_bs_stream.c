@@ -27,9 +27,6 @@
 #include "dvbcsa_bs.h"
 #include "dvbcsa_bs_stream_kernel.h"
 
-#define DVBCSA_BS_STREAM_KERNEL_INIT 
-#include "dvbcsa_bs_stream_kernel.inc"
-#undef DVBCSA_BS_STREAM_KERNEL_INIT 
 #include "dvbcsa_bs_stream_kernel.inc"
 
 void

@@ -571,21 +571,6 @@ static inline uint64_t dvbcsa_key_permute_block(uint64_t k)
 }
 
 void
-dvbcsa_key_schedule_block(const dvbcsa_cw_t cw, uint8_t * kk)
-{
-  uint64_t k[7];
-  int i, j;
-
-  k[6] = dvbcsa_load_le64(cw);
-  for (i = 6; i > 0; i--)
-    k[i - 1] = dvbcsa_key_permute_block(k[i]);
-
-  for (i = 0; i < 7; i++)
-    for (j = 0; j < 8; j++)
-      kk[i*8+j] = (k[i]>>(j*8)) ^ i;
-}
-
-void
 dvbcsa_key_schedule_block_ecm(const unsigned char ecm, const dvbcsa_cw_t cw, uint8_t * kk)
 {
   uint64_t k[7];
@@ -598,4 +583,10 @@ dvbcsa_key_schedule_block_ecm(const unsigned char ecm, const dvbcsa_cw_t cw, uin
   for (i = 0; i < 7; i++)
     for (j = 0; j < 8; j++)
       kk[i*8+j] = (k[i]>>(j*8)) ^ i;
+}
+
+void
+dvbcsa_key_schedule_block(const dvbcsa_cw_t cw, uint8_t * kk)
+{
+  dvbcsa_key_schedule_block_ecm(0, cw, kk);
 }

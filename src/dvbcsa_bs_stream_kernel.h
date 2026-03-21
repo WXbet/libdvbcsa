@@ -18,5 +18,8 @@ struct dvbcsa_bs_stream_regs_s {
   dvbcsa_bs_word_t r;
 };
 
+#define dvbcsa_bs_stream_cipher_kernel_init(regs)    _dvbcsa_bs_stream_cipher_kernel(1, regs)
+#define dvbcsa_bs_stream_cipher_kernel(regs)         _dvbcsa_bs_stream_cipher_kernel(0, regs)
+
 #endif
 
