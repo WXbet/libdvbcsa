@@ -46,7 +46,7 @@ dvbcsa_bs_key_set (const dvbcsa_cw_t cw, struct dvbcsa_bs_key_s *key)
   for (i = 0; i < DVBCSA_KEYSBUFF_SIZE; i++)
     {
 #if BS_BATCH_SIZE == 32
-      *(dvbcsa_u32_aliasing_t *)(key->block + i) = kk[i] * 0x01010101;
+      *(dvbcsa_u32_aliasing_t *)(key->block + i) = kk[i] * 0x01010101U;
 
 #elif BS_BATCH_SIZE == 64
       *(dvbcsa_u64_aliasing_t *)(key->block + i) = kk[i] * 0x0101010101010101ULL;
@@ -83,7 +83,7 @@ dvbcsa_bs_key_set_ecm (const unsigned char ecm, const dvbcsa_cw_t cw, struct dvb
   for (i = 0; i < DVBCSA_KEYSBUFF_SIZE; i++)
     {
 #if BS_BATCH_SIZE == 32
-      *(dvbcsa_u32_aliasing_t *)(key->block + i) = kk[i] * 0x01010101;
+      *(dvbcsa_u32_aliasing_t *)(key->block + i) = kk[i] * 0x01010101U;
 
 #elif BS_BATCH_SIZE == 64
       *(dvbcsa_u64_aliasing_t *)(key->block + i) = kk[i] * 0x0101010101010101ULL;
