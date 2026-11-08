@@ -47,10 +47,11 @@ static void dvbcsa_pkt_buf_load(struct dvbcsa_bs_pkt_buf *pkt_buf,
 
   for (i = 0; pcks[i].data; i++, block += BS_PKT_BLOCKS8)
     {
-      pkt_buf->len8[i] = pcks[i].len & (unsigned)~0x7;
+      unsigned int len = pcks[i].len < maxlen ? pcks[i].len : maxlen;
+      pkt_buf->len8[i] = len & (unsigned)~0x7;
       if (pcks[i + 1].data)
         __builtin_prefetch(pcks[i + 1].data, 0, 0);
-      memcpy(block, pcks[i].data, pcks[i].len);
+      memcpy(block, pcks[i].data, len);
     }
 
   pkt_buf->n_packets = i;
@@ -63,8 +64,11 @@ static void dvbcsa_pkt_buf_store(const struct dvbcsa_bs_pkt_buf *pkt_buf,
   int i;
   const dvbcsa_bs_block8_t *block = pkt_buf->data;
 
-  for (i = 0; pcks[i].data; i++, block += BS_PKT_BLOCKS8)
-    memcpy(pcks[i].data, block, pcks[i].len);
+  for (i = 0; i < pkt_buf->n_packets; i++, block += BS_PKT_BLOCKS8)
+    {
+      unsigned int len = pcks[i].len < pkt_buf->maxlen ? pcks[i].len : pkt_buf->maxlen;
+      memcpy(pcks[i].data, block, len);
+    }
 }
 
 void dvbcsa_bs_decrypt(const struct dvbcsa_bs_key_s *key,
