@@ -241,7 +241,7 @@ main            (void)
 
 #ifdef BS_LOAD_DEINTERLEAVE_8
 
-#ifndef DVBCSA_USE_AVX2
+#if !defined(DVBCSA_USE_AVX2) && !defined(DVBCSA_USE_AVX512)
   /* test BS_LOAD_DEINTERLEAVE_8 */
 
   {
