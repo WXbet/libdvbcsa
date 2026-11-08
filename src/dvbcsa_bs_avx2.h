@@ -51,6 +51,14 @@ typedef __m256i dvbcsa_bs_word_t;
 
 #define BS_EMPTY()
 
+#define BS_SWAP32_LE(t, b) \
+    { \
+    dvbcsa_bs_word_t _lo = _mm256_unpacklo_epi32(t, b); \
+    dvbcsa_bs_word_t _hi = _mm256_unpackhi_epi32(t, b); \
+    (t) = _mm256_unpacklo_epi64(_lo, _hi); \
+    (b) = _mm256_unpackhi_epi64(_lo, _hi); \
+    }
+
 /* BS_LOAD_DEINTERLEAVE_8 stub: deinterleaving is done by BLOCK_SBOX_PERMUTE */
 #define BS_LOAD_DEINTERLEAVE_8(ptr, var_lo, var_hi) \
       {\

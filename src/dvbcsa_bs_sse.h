@@ -56,6 +56,14 @@ typedef __m128i dvbcsa_bs_word_t;
 
 #define BS_EMPTY()
 
+#define BS_SWAP32_LE(t, b) \
+    { \
+    dvbcsa_bs_word_t _lo = _mm_unpacklo_epi32(t, b); \
+    dvbcsa_bs_word_t _hi = _mm_unpackhi_epi32(t, b); \
+    (t) = _mm_unpacklo_epi64(_lo, _hi); \
+    (b) = _mm_unpackhi_epi64(_lo, _hi); \
+    }
+
 #ifdef DVBCSA_USE_SSSE3
 /* block cipher 2-word load with byte-deinterleaving */
 #define BS_LOAD_DEINTERLEAVE_8(ptr, var_lo, var_hi) \
