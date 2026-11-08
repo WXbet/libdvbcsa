@@ -98,9 +98,6 @@ static inline void avx2_block_sbox_permute(dvbcsa_bs_word_t *src,
       b = _mm256_slli_epi32(b, 16);
       res2 = BS_OR(res2, b);
 
-      a = _mm256_unpacklo_epi32(res1, res2);
-      b = _mm256_unpackhi_epi32(res1, res2);
-
       a = _mm256_shuffle_epi8(res1, shuffle_mask);
       b = _mm256_shuffle_epi8(res2, shuffle_mask);
       res1 = _mm256_unpacklo_epi16(a, b);
