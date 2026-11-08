@@ -20,4 +20,4 @@ else
 libdvbcsa_la_SOURCES += dvbcsa_bs_transpose_stream.c
 endif
 
-libdvbcsa_la_LDFLAGS = -version-number 1:1:0 $(libtool_flags)
+libdvbcsa_la_LDFLAGS = -version-number 1:2:0 $(libtool_flags)

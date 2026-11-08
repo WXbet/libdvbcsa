@@ -1,2 +1,10 @@
+1.2.0
+	* Add AVX-512 bitslice backend (512 packets in parallel)
+	* Add native SWAP32 transpose for SSE and AVX2
+	* Prefetch next packet data during batch loading
+	* Remove dead code in AVX2 SBOX permute
+	* Add pkg-config support with bitslice backend info
+	* Auto-detect NEON on AArch64 hosts
+
 1.1.0
 	* Optimization of key schedule

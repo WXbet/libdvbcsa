@@ -1,4 +1,4 @@
-AC_INIT(libdvbcsa, 1.1.0)
+AC_INIT(libdvbcsa, 1.2.0)
 AC_PREREQ(2.50)
 
 AC_CANONICAL_HOST
