@@ -1,6 +1,6 @@
 
-noinst_PROGRAMS = benchbitslice testbitslice benchdec benchenc testdec testenc testbsops benchbitsliceks benchks
-TESTS = testbsops testdec testenc testbitslice
+noinst_PROGRAMS = benchbitslice testbitslice benchdec benchenc testdec testenc testbsops benchbitsliceks benchks testbsbatch testicam
+TESTS = testbsops testdec testenc testbitslice testbsbatch testicam
 
 benchbitslice_SOURCES = benchbitslice.c
 benchbitslice_LDADD = $(top_builddir)/src/libdvbcsa.la
@@ -38,3 +38,10 @@ testbsops_SOURCES = testbsops.c
 testbsops_LDADD = $(top_builddir)/src/libdvbcsa.la
 testbsops_CFLAGS = -I$(top_srcdir)/src
 
+testbsbatch_SOURCES = testbsbatch.c
+testbsbatch_LDADD = $(top_builddir)/src/libdvbcsa.la
+testbsbatch_CFLAGS = -I$(top_srcdir)/src
+
+testicam_SOURCES = testicam.c
+testicam_LDADD = $(top_builddir)/src/libdvbcsa.la
+testicam_CFLAGS = -I$(top_srcdir)/src
