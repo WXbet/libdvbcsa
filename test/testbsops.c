@@ -24,12 +24,14 @@
 #include "dvbcsa_bs.h"
 #include "dvbcsa_bs_transpose.h"
 
+static int failed;
+
 void _testeq(const int i, uint8_t a, uint8_t b, const char *sa, const char *sb, const char *file, const int line, const char *func)
 {
         if ( a==b )
                 return;
         printf("Test failed in %s:%d (%s), %s (%x) == %s (%x), i=%d\n", file, line, func, sa, a, sb, b, i);
-//      abort();
+        failed = 1;
 }
 
 #define testeq(i, a, b) _testeq(i, a, b, #a, #b, __FILE__, __LINE__, __FUNCTION__)
@@ -344,7 +346,7 @@ main            (void)
 
   }
 
-  puts("Ok");
-  return 0;
+  puts(failed ? "FAILED" : "Ok");
+  return failed != 0;
 }
 
