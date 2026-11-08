@@ -48,6 +48,8 @@ static void dvbcsa_pkt_buf_load(struct dvbcsa_bs_pkt_buf *pkt_buf,
   for (i = 0; pcks[i].data; i++, block += BS_PKT_BLOCKS8)
     {
       pkt_buf->len8[i] = pcks[i].len & (unsigned)~0x7;
+      if (pcks[i + 1].data)
+        __builtin_prefetch(pcks[i + 1].data, 0, 0);
       memcpy(block, pcks[i].data, pcks[i].len);
     }
 
