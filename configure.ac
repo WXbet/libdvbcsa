@@ -23,7 +23,7 @@ AC_ARG_ENABLE(ssse3, AC_HELP_STRING(--enable-ssse3, [Use SSSE3 for bitslice]), s
 AC_ARG_ENABLE(avx2, AC_HELP_STRING(--enable-avx2, [Use AVX2 for bitslice]), avx2_debug=$enableval, enable_avx2=no)
 AC_ARG_ENABLE(avx512, AC_HELP_STRING(--enable-avx512, [Use AVX-512 for bitslice]), avx512_debug=$enableval, enable_avx512=no)
 AC_ARG_ENABLE(altivec, AC_HELP_STRING(--enable-altivec, [Use AltiVec for bitslice]), altivec_debug=$enableval, enable_altivec=no)
-AC_ARG_ENABLE(neon, AC_HELP_STRING(--enable-neon, [Use NEON for bitslice]), neon_debug=$enableval, enable_neon=no)
+AC_ARG_ENABLE(neon, AC_HELP_STRING(--enable-neon, [Use NEON for bitslice]), neon_debug=$enableval, enable_neon=auto)
 AC_ARG_ENABLE(alt-sbox, AC_HELP_STRING(--enable-alt-sbox, [Use alternative sbox lookup, may be faster on some targets]), alt_sbox_debug=$enableval, enable_alt_sbox=no)
 
 AM_INIT_AUTOMAKE
@@ -48,6 +48,17 @@ AC_C_BIGENDIAN(
  AC_MSG_ERROR(unknown endianess),
  AC_MSG_ERROR(universial endianess not supported)
 )
+
+if test "$enable_neon" = "auto" ; then
+    case $host_cpu in
+        aarch64*|arm64*)
+            enable_neon=yes
+            ;;
+        *)
+            enable_neon=no
+            ;;
+    esac
+fi
 
 if test "$enable_mmx" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_MMX, 1, Using MMX bitslice.)
