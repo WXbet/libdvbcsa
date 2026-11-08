@@ -52,26 +52,38 @@ AC_C_BIGENDIAN(
 if test "$enable_mmx" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_MMX, 1, Using MMX bitslice.)
      GCC_CFLAGS="$GCC_CFLAGS -mmmx"
+     DVBCSA_BITSLICE="mmx"
+     DVBCSA_BATCH_SIZE=64
 
 elif test "$enable_sse2" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_SSE, 1, Using SSE2 bitslice.)
      GCC_CFLAGS="$GCC_CFLAGS -msse -msse2"
+     DVBCSA_BITSLICE="sse2"
+     DVBCSA_BATCH_SIZE=128
 
 elif test "$enable_ssse3" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_SSSE3, 1, Using SSSE3 bitslice.)
      GCC_CFLAGS="$GCC_CFLAGS -mssse3"
+     DVBCSA_BITSLICE="ssse3"
+     DVBCSA_BATCH_SIZE=128
 
 elif test "$enable_avx2" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_AVX2, 1, Using AVX2 bitslice.)
      GCC_CFLAGS="$GCC_CFLAGS -mavx2"
+     DVBCSA_BITSLICE="avx2"
+     DVBCSA_BATCH_SIZE=256
 
 elif test "$enable_avx512" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_AVX512, 1, Using AVX-512 bitslice.)
      GCC_CFLAGS="$GCC_CFLAGS -mavx512f -mavx512bw"
+     DVBCSA_BITSLICE="avx512"
+     DVBCSA_BATCH_SIZE=512
 
 elif test "$enable_altivec" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_ALTIVEC, 1, Using AltiVec bitslice.)
      GCC_CFLAGS="$GCC_CFLAGS -maltivec -mabi=altivec"
+     DVBCSA_BITSLICE="altivec"
+     DVBCSA_BATCH_SIZE=128
 
 elif test "$enable_neon" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_NEON, 1, Using NEON bitslice.)
@@ -84,25 +96,38 @@ elif test "$enable_neon" = "yes" ; then
              esac
              ;;
      esac
+     DVBCSA_BITSLICE="neon"
+     DVBCSA_BATCH_SIZE=128
 
 elif test "$enable_uint32" = "yes" ; then
      transpose_32=yes
      AC_DEFINE(DVBCSA_USE_UINT32, 1, Using 32 bits integer bitslice.)
+     DVBCSA_BITSLICE="uint32"
+     DVBCSA_BATCH_SIZE=32
 
 elif test "$enable_uint64" = "yes" ; then
      AC_DEFINE(DVBCSA_USE_UINT64, 1, Using 64 bits integer bitslice.)
+     DVBCSA_BITSLICE="uint64"
+     DVBCSA_BATCH_SIZE=64
 
 else
      case $ac_cv_sizeof_long in
           8)
                AC_DEFINE(DVBCSA_USE_UINT64, 1, Using 64 bits integer bitslice.)
+               DVBCSA_BITSLICE="uint64"
+               DVBCSA_BATCH_SIZE=64
           ;;
           *)
                transpose_32=yes
                AC_DEFINE(DVBCSA_USE_UINT32, 1, Using 32 bits integer bitslice.)
+               DVBCSA_BITSLICE="uint32"
+               DVBCSA_BATCH_SIZE=32
           ;;
      esac
 fi
+
+AC_SUBST(DVBCSA_BITSLICE)
+AC_SUBST(DVBCSA_BATCH_SIZE)
 
 if test "$enable_alt_sbox" = "yes"; then
      AC_DEFINE(DVBCSA_USE_ALT_SBOX, 1, Using alternative sbox lookup.)
@@ -165,5 +190,6 @@ AC_OUTPUT([
   src/Makefile
   src/dvbcsa/Makefile
   test/Makefile
+  libdvbcsa.pc
 ])
 
